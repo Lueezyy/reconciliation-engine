@@ -11,17 +11,25 @@ print("Theirs:", theirs)
 our_refs = [payment["ref"] for payment in ours]
 their_refs = [payment["ref"] for payment in theirs]
 
+matched = []
+missing_from_theirs = []
+missing_from_ours = []
+
 for payment in ours:
-    ref = payment["ref"]
-    amount = payment["amount"]
-    print("Checking", ref)
-    if ref in their_refs:
-        print(f"{ref} (${amount}): matched")
+    if payment["ref"] in their_refs:
+        matched.append(payment)
     else:
-        print(f"{ref} (${amount}): missing from theirs")
+        missing_from_theirs.append(payment)
 
 for payment in theirs:
-    ref = payment["ref"]
-    amount = payment["amount"]
-    if ref not in our_refs:
-        print(f"{ref} (${amount}): missing from ours")
+    if payment["ref"] not in our_refs:
+        missing_from_ours.append(payment)
+
+sections = [("MATCHED", matched),
+    ("MISSING FROM THEIRS", missing_from_theirs),
+    ("MISSING FROM OURS", missing_from_ours),]
+
+for title, payments in sections:
+    print(f"{title} ({len(payments)})")
+    for payment in payments:
+        print(f"  {payment['ref']} ${payment['amount']}")
