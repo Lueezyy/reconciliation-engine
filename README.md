@@ -15,7 +15,7 @@ A simple payment reconciliation script in Python.
 ## How to run
 
 ```
-python recon.py
+python Main.py
 ```
 
 The results print as grouped sections with a count for each.
