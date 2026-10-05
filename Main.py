@@ -1,12 +1,19 @@
-ours = [{"ref": "PAY001", "amount": 50},
-    {"ref": "PAY002", "amount": 75},
-    {"ref": "PAY003", "amount": 120},]
-theirs = [{"ref": "PAY001", "amount": 50},
-    {"ref": "PAY003", "amount": 120},
-    {"ref": "PAY004", "amount": 30},]
+import csv
 
-print("Ours:", ours)
-print("Theirs:", theirs)
+def load_payments(path):
+    payments = []
+    with open(path, newline="") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            payment = {"ref": row["ref"], "amount": int(row["amount"])}
+            payments.append(payment)
+    return payments
+
+ours = load_payments("ours.csv")
+theirs = load_payments("theirs.csv")
+
+print(f"Ours: {ours}")
+print(f"Theirs: {theirs}")
 
 our_refs = [payment["ref"] for payment in ours]
 their_refs = [payment["ref"] for payment in theirs]
@@ -25,7 +32,8 @@ for payment in theirs:
     if payment["ref"] not in our_refs:
         missing_from_ours.append(payment)
 
-sections = [("MATCHED", matched),
+sections = [
+    ("MATCHED", matched),
     ("MISSING FROM THEIRS", missing_from_theirs),
     ("MISSING FROM OURS", missing_from_ours),]
 
