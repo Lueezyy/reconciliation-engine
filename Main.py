@@ -1,11 +1,12 @@
 import csv
+from decimal import Decimal
 
 def load_payments(path):
     payments = {}
     with open(path, newline="") as file:
         reader = csv.DictReader(file)
         for row in reader:
-            payment = {"ref": row["ref"], "amount": int(row["amount"])}
+            payment = {"ref": row["ref"], "amount": Decimal(row["amount"])}
             payments[payment["ref"]] = payment
     return payments
 
@@ -34,4 +35,4 @@ sections = [
 for title, payments in sections:
     print(f"{title} ({len(payments)})")
     for payment in payments:
-        print(f"  {payment['ref']} ${payment['amount']}")
+        print(f"  {payment['ref']} ${payment['amount']:.2f}")
