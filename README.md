@@ -6,6 +6,7 @@ A simple payment reconciliation script in Python.
 
 ## Features
 
+- Read both payment lists from CSV files
 - Compare our payment list against theirs
 - List payments found in both (matched)
 - List payments missing from theirs
