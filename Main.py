@@ -1,4 +1,5 @@
 import csv
+import sys
 from decimal import Decimal
 
 def load_payments(path):
@@ -10,8 +11,11 @@ def load_payments(path):
             payments[payment["ref"]] = payment
     return payments
 
-ours = load_payments("ours.csv")
-theirs = load_payments("theirs.csv")
+ours_path = sys.argv[1] if len(sys.argv) > 1 else "ours.csv"
+theirs_path = sys.argv[2] if len(sys.argv) > 2 else "theirs.csv"
+
+ours = load_payments(ours_path)
+theirs = load_payments(theirs_path)
 
 matched = []
 missing_from_theirs = []
